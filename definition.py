@@ -23,3 +23,26 @@ class Agent():
         """
         
         raise NotImplementedError('act')
+
+class Environment():
+    """
+        Implements the interface for an Environment 
+    """
+
+    def initial_percepts(self):
+        """
+        Returns the environment initial percepts
+        
+        Raises: 
+            NotImplementedError: If the method is not implemented or not overridden
+        """
+        raise NotImplementedError('initial_percepts')
+    
+    def signal(self, action):
+        """
+        Returns the environment percepts after action is executed
+        
+        Raises: 
+            NotImplementedError: If the method is not implemented or not overridden
+        """
+        raise NotImplementedError('signal')
