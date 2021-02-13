@@ -1,21 +1,48 @@
-class Environment:
+class Agent():
     """
-    This class implements and interface for an Environment
+        Implements the interface for an Agent
     """
-    def initial_percepts(self):
-        raise NotImplementedError('initial_percepts')
 
-    def signal(self, action):
-        raise NotImplementedError('signal')
-
-
-class Agent:
-    """
-    This class implements an interface for an agent
-    """
     def __init__(self, env):
-        self.env = env
+        """
+        Contructor for the agent class
 
-    def act(self):
-        raise NotImplementedError('act')
+        Args:
+            env: a reference to an enviroment
+            
+        """
+        self.env = env
     
+    def act(self):
+        """
+        Defines the agent action
+
+        Raises:
+            NotImplementedError: If the method is not implemented or not overrided
+
+        """
+        
+        raise NotImplementedError('act')
+
+class Environment():
+    """
+        Implements the interface for an Environment 
+    """
+
+    def initial_percepts(self):
+        """
+        Returns the environment initial percepts
+        
+        Raises: 
+            NotImplementedError: If the method is not implemented or not overridden
+        """
+        raise NotImplementedError('initial_percepts')
+    
+    def signal(self, action):
+        """
+        Returns the environment percepts after action is executed
+        
+        Raises: 
+            NotImplementedError: If the method is not implemented or not overridden
+        """
+        raise NotImplementedError('signal')
