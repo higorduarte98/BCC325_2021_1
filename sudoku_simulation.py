@@ -36,12 +36,13 @@ s3 = [[0, 0, 0, 0, 9, 4, 0, 1, 0],
 env = Sudoku(s3, True)
 
 # Creat an agent
-ag = SudokuAgent(env, True)
+ag = SudokuAgent(env, False)
+
 
 # Print CSP
-for c in ag.csp:
-    for cell in c:
-        print(cell)
+#for c in ag.csp:
+#    for cell in c:
+#        print(cell)
 
-input('Press ENTER to start')
+#input('Press ENTER to start')
 ag.act()

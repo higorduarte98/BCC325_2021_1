@@ -86,8 +86,30 @@ class Sudoku(Environment):
 
     # TODO
     def apply_GAC(self):
-        pass
-        
+        to_do = []
+
+        for row in self.csp:
+            for cell in row:
+                for constrain in cell['C']:
+                    to_do.append({'X' : cell['X'], 'C': constrain})
+        while to_do != []:
+            constrain = to_do.pop(0)
+            if type(constrain['C']) != EqNumConstraint:
+                remove = []
+                for i in self.csp[constrain['X'][0]][constrain['X'][1]]['D']:
+                    v2 = constrain['C'].scope[1]
+                    viable = any([constrain['C'].condition(i,d) for d in self.csp[v2[0]][v2[1]]['D']])
+                    if not viable:
+                        remove.append(i)
+                for i in remove:
+                    self.csp[constrain['X'][0]][constrain['X'][1]]['D'].remove(i)
+                if remove != []:
+                    for c in self.csp:
+                        for cell in c:
+                            for cons in cell['C']:
+                                if cell['X'] != constrain['X'] and cons.scope[1] == constrain['X']:
+                                    to_do.append({'X' : cell['X'], 'C' : cons})
+
 def is_viable(sudoku, i, j, v):
     ''' Auxiliary method that verifies whether a value, v, can be assigned to position [i,j] in the sudoku
 

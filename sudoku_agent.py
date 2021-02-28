@@ -1,6 +1,7 @@
 from definitions import Agent
 import copy
 from os import system
+import time
 
 
 class SudokuAgent(Agent):
@@ -64,6 +65,7 @@ def pp_sudoku(sudoku):
             if j % 3 == 0:
                 row = row + '|'
             row = row + ' ' + str(sudoku[i][j]) + ' '
-        print(row + '|')
+        print(row + '|', flush=True)
 
-    print('-------------------------------')
+    print('-------------------------------', flush=True)
+    time.sleep(0.01)
