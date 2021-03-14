@@ -1,3 +1,5 @@
+from knowledge_base import *
+
 class LogicalAgent():
 
     def __init__(self,KB):
@@ -10,7 +12,24 @@ class LogicalAgent():
         Returns:
             A list with all the logical consequences of KB
         '''
-        pass
+        C = []
+
+        for ask in self.KB.askables:
+            if ask not in C:
+                x = True if input(f'atom {ask.atom} is true (y or n)? ') == 'y' else False
+
+                if x:
+                    C.append(ask.atom)
+
+        while True:
+            select = False
+            for clause in self.KB.clauses:
+                if clause.head not in C and (all(map(lambda x: x in C, clause.body))):
+                    C.append(clause.head)
+                    select = True
+            if select == False:
+                break
+        return C
 
     # TODO
     def top_down(self,query):
@@ -24,8 +43,32 @@ class LogicalAgent():
             True if the query is a logical consequence of KB, False otherwise
 
         '''
+        G = query
         
-        pass
+        while G != []:
+            findClause = False
+
+            for statement in self.KB.statements:
+                if isinstance(statement, Clause):
+                    if statement.head == G[0]:
+                        G.pop(0)
+                        G = statement.body + G
+                        findClause = True
+                        break
+
+                if isinstance(statement, Askable):
+                    if statement.atom == G[0]:
+                        x = True if input(f'atom {statement.atom} is true (y or n)? ') == 'y' else False
+                        if x:
+                            G.pop(0)
+                            findClause = True
+                            break
+                            
+                
+            if findClause == False:
+                return False
+
+        return True
     
     # TODO
     def explain(self,g):
@@ -38,4 +81,22 @@ class LogicalAgent():
         Returns:
             A list of explanation for the atoms in g
         '''
+
+        '''
+        C = []
+
+        for statement in self.KB.statements:
+            if isinstance(statement, Assumable):
+                C.append((statement.atom, [statement.atom]))
+
+        for clause in self.KB.clauses:
+            #print([c for x in clause.body for c in C if x == c[0]].__len__() == clause.body.__len__())
+            if all(map(lambda x: (x, ...) in C, clause.body)):
+                C.append((clause.head, [x[1] for x in C if x[0] in clause.body]))
+                                        
+            print(list(map(lambda x: (x, ) in C, clause.body)))
+        
+        print(C)
+        '''
+
         pass
